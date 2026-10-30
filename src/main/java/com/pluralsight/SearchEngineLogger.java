@@ -1,18 +1,17 @@
 package com.pluralsight;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 public class SearchEngineLogger {
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         logAction("launch");
-        String term;
 
         while (true) {
             System.out.print("Enter a search term (X or x to exit): ");
-            term = scanner.nextLine();
+            String term = scanner.nextLine().trim();
 
             if (term.equalsIgnoreCase("x")) {
                 break;
@@ -20,11 +19,10 @@ public class SearchEngineLogger {
             logAction("search : " + term);
         }
         logAction("exit");
-        scanner.close();
     }
 
     static void logAction(String action) {
-        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH: mm: ss");
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String timestamp = LocalDateTime.now().format(formatter);
 
         try (FileWriter writer = new FileWriter("logs.txt", true)) {
